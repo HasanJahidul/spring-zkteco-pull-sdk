@@ -29,10 +29,21 @@ public class ZKTecoProtocol implements AutoCloseable {
     private boolean connected = false;
     private byte[] lastDataReceived = new byte[0];
 
+    /**
+     * Create ZKTeco protocol handler with default port
+     *
+     * @param ipAddress IP address of the device
+     */
     public ZKTecoProtocol(String ipAddress) {
         this(ipAddress, DEFAULT_PORT);
     }
 
+    /**
+     * Create ZKTeco protocol handler with custom port
+     *
+     * @param ipAddress IP address of the device
+     * @param port      Port number (default is 4370)
+     */
     public ZKTecoProtocol(String ipAddress, int port) {
         this.ipAddress = ipAddress;
         this.port = port;

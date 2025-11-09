@@ -23,10 +23,21 @@ public class ZKTecoDeviceService implements AutoCloseable {
 
     private final ZKTecoProtocol protocol;
 
+    /**
+     * Create ZKTeco device service with default port
+     *
+     * @param ipAddress IP address of the device
+     */
     public ZKTecoDeviceService(String ipAddress) {
         this.protocol = new ZKTecoProtocol(ipAddress);
     }
 
+    /**
+     * Create ZKTeco device service with custom port
+     *
+     * @param ipAddress IP address of the device
+     * @param port      Port number (default is 4370)
+     */
     public ZKTecoDeviceService(String ipAddress, int port) {
         this.protocol = new ZKTecoProtocol(ipAddress, port);
     }
