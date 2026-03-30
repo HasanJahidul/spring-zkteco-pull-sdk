@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UserRetrievalTest {
 
-    private static final String DEVICE_IP = "192.168.68.222";
+    private static final String DEVICE_IP = "172.22.22.37";
 
     @Test
     public void testGetUsers() {
@@ -22,18 +22,18 @@ public class UserRetrievalTest {
         try {
             service = new ZKTecoDeviceService(DEVICE_IP);
             boolean connected = service.connect();
-            
+
             if (!connected) {
                 System.out.println("✗ Failed to connect to device");
                 return;
             }
-            
+
             System.out.println("✓ Connected to device: " + DEVICE_IP);
-            
+
             List<UserInfo> users = service.getUsers();
-            
+
             System.out.println("✓ Total Users Retrieved: " + users.size());
-            
+
             if (users.size() > 0) {
                 System.out.println("\nFirst 10 users:");
                 int count = Math.min(10, users.size());
@@ -47,14 +47,14 @@ public class UserRetrievalTest {
                             user.getRole(),
                             user.getCardno());
                 }
-                
+
                 if (users.size() > 10) {
                     System.out.println("  ... and " + (users.size() - 10) + " more users");
                 }
             } else {
                 System.out.println("⚠ No users found on device");
             }
-            
+
         } catch (Exception e) {
             System.out.println("✗ Error retrieving users: " + e.getMessage());
             e.printStackTrace();

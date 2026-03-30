@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.hasanjahidul</groupId>
-    <artifactId>zkteco-spring-sdk</artifactId>
-    <version>1.0.0</version>
+    <artifactId>zkteco-pull-spring-sdk</artifactId>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>ZKTeco Spring SDK</name>
     <description>Spring SDK for ZKTeco Attendance Devices</description>
-    <url>https://github.com/hasanjaidul/spring-zkteco-pull-sdk</url>
+    <url>https://github.com/HasanJahidul/zkteco-pull-spring-sdk</url>
 
     <licenses>
         <license>
@@ -22,15 +22,15 @@
 
     <developers>
         <developer>
-            <name>Hasan Jaidul</name>
-            <email>hasanjaidul@gmail.com</email>
+            <name>Jaidul Hasan</name>
+            <email>contact@hasanjahidul.com</email>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/hasanjaidul/spring-zkteco-pull-sdk.git</connection>
-        <developerConnection>scm:git:ssh://github.com/hasanjaidul/spring-zkteco-pull-sdk.git</developerConnection>
-        <url>https://github.com/hasanjaidul/spring-zkteco-pull-sdk</url>
+        <connection>scm:git:git://github.com/HasanJahidul/zkteco-pull-spring-sdk.git</connection>
+        <developerConnection>scm:git:ssh://github.com/HasanJahidul/zkteco-pull-spring-sdk.git</developerConnection>
+        <url>https://github.com/HasanJahidul/zkteco-pull-spring-sdk</url>
     </scm>
 
     <properties>
@@ -142,27 +142,17 @@
             </plugin>
 
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
+
 </project>

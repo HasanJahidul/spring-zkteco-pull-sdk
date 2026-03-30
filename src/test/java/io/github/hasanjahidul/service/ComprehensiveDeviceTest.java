@@ -15,7 +15,7 @@ import java.util.List;
 public class ComprehensiveDeviceTest {
 
     // Configure device IP here
-    private static final String DEVICE_IP = "192.168.68.222"; // Change to test different device
+    private static final String DEVICE_IP = "172.22.22.37"; // Change to test different device
     private static final int PORT = 4370;
 
     @Test
@@ -26,7 +26,7 @@ public class ComprehensiveDeviceTest {
         System.out.println("========================================\n");
 
         try (ZKTecoDeviceService service = new ZKTecoDeviceService(DEVICE_IP, PORT)) {
-            
+
             // 1. CONNECTION TEST
             System.out.println("1. CONNECTION TEST");
             System.out.println("-".repeat(40));
@@ -74,12 +74,12 @@ public class ComprehensiveDeviceTest {
             try {
                 LocalDateTime currentTime = service.getDeviceTime();
                 System.out.println("✓ Current Device Time: " + currentTime);
-                
+
                 // Test setting time (set to current system time)
                 LocalDateTime newTime = LocalDateTime.now();
                 service.setDeviceTime(newTime);
                 System.out.println("✓ Time Set To: " + newTime);
-                
+
                 // Verify time was set
                 Thread.sleep(2000);
                 LocalDateTime verifyTime = service.getDeviceTime();
@@ -95,7 +95,7 @@ public class ComprehensiveDeviceTest {
             try {
                 List<AttendanceRecord> records = service.getAttendance();
                 System.out.println("✓ Total Attendance Records: " + records.size());
-                
+
                 if (records.size() > 0) {
                     System.out.println("\nFirst 5 records:");
                     int count = Math.min(5, records.size());
@@ -109,7 +109,7 @@ public class ComprehensiveDeviceTest {
                                 record.getType(),
                                 record.getTimestamp());
                     }
-                    
+
                     if (records.size() > 5) {
                         System.out.println("  ... and " + (records.size() - 5) + " more records");
                     }
@@ -126,7 +126,7 @@ public class ComprehensiveDeviceTest {
             try {
                 List<UserInfo> users = service.getUsers();
                 System.out.println("✓ Total Users: " + users.size());
-                
+
                 if (users.size() > 0) {
                     System.out.println("\nFirst 5 users:");
                     int count = Math.min(5, users.size());
@@ -140,48 +140,49 @@ public class ComprehensiveDeviceTest {
                                 user.getRole(),
                                 user.getCardno());
                     }
-                    
+
                     if (users.size() > 5) {
                         System.out.println("  ... and " + (users.size() - 5) + " more users");
                     }
                 }
-                
+
                 // Note: User addition/removal test is disabled to avoid modifying device data
                 System.out.println("\n⚠ User Addition/Removal Test:");
                 System.out.println("  Test is DISABLED to preserve device data");
                 System.out.println("  To test user management, uncomment the code below");
-                
-                /* UNCOMMENT TO TEST USER ADDITION/REMOVAL
-                int initialUserCount = users.size();
-                System.out.println("  Initial user count: " + initialUserCount);
-                
-                service.setUser(9999, "TEST001", "Test User", "12345678", 0, 0);
-                System.out.println("  Sent command to add test user: TEST001 (UID: 9999)");
-                
-                // Verify user was added - wait a bit longer for device to process
-                Thread.sleep(2000);
-                List<UserInfo> updatedUsers = service.getUsers();
-                System.out.println("  Users after addition: " + updatedUsers.size());
-                
-                // Check if user was actually added
-                boolean userFound = updatedUsers.stream()
-                    .anyMatch(u -> "TEST001".equals(u.getUserId()));
-                
-                if (userFound) {
-                    System.out.println("  ✓ Test user successfully added!");
-                    
-                    // Remove the test user to clean up
-                    service.removeUser(9999);
-                    System.out.println("  Sent command to remove test user: 9999");
-                    
-                    Thread.sleep(1000);
-                    List<UserInfo> finalUsers = service.getUsers();
-                    System.out.println("  Users after removal: " + finalUsers.size());
-                } else {
-                    System.out.println("  ⚠ Test user not found in user list");
-                }
-                */
-                
+
+                /*
+                 * UNCOMMENT TO TEST USER ADDITION/REMOVAL
+                 * int initialUserCount = users.size();
+                 * System.out.println("  Initial user count: " + initialUserCount);
+                 * 
+                 * service.setUser(9999, "TEST001", "Test User", "12345678", 0, 0);
+                 * System.out.println("  Sent command to add test user: TEST001 (UID: 9999)");
+                 * 
+                 * // Verify user was added - wait a bit longer for device to process
+                 * Thread.sleep(2000);
+                 * List<UserInfo> updatedUsers = service.getUsers();
+                 * System.out.println("  Users after addition: " + updatedUsers.size());
+                 * 
+                 * // Check if user was actually added
+                 * boolean userFound = updatedUsers.stream()
+                 * .anyMatch(u -> "TEST001".equals(u.getUserId()));
+                 * 
+                 * if (userFound) {
+                 * System.out.println("  ✓ Test user successfully added!");
+                 * 
+                 * // Remove the test user to clean up
+                 * service.removeUser(9999);
+                 * System.out.println("  Sent command to remove test user: 9999");
+                 * 
+                 * Thread.sleep(1000);
+                 * List<UserInfo> finalUsers = service.getUsers();
+                 * System.out.println("  Users after removal: " + finalUsers.size());
+                 * } else {
+                 * System.out.println("  ⚠ Test user not found in user list");
+                 * }
+                 */
+
             } catch (Exception e) {
                 System.out.println("✗ User Management Error: " + e.getMessage());
                 e.printStackTrace();
@@ -195,11 +196,11 @@ public class ComprehensiveDeviceTest {
                 service.writeLCD(0, "Hello ZKTeco!");
                 System.out.println("✓ Written to LCD line 0: 'Hello ZKTeco!'");
                 Thread.sleep(3000);
-                
+
                 service.writeLCD(1, "Test from Java");
                 System.out.println("✓ Written to LCD line 1: 'Test from Java'");
                 Thread.sleep(3000);
-                
+
                 service.clearLCD();
                 System.out.println("✓ LCD Cleared");
             } catch (Exception e) {
@@ -226,7 +227,7 @@ public class ComprehensiveDeviceTest {
                 service.disableDevice();
                 System.out.println("✓ Device Disabled (Locked)");
                 Thread.sleep(2000);
-                
+
                 service.enableDevice();
                 System.out.println("✓ Device Enabled (Unlocked)");
             } catch (Exception e) {
@@ -240,31 +241,31 @@ public class ComprehensiveDeviceTest {
             System.out.println("⚠ Sleep/Resume/Restart/PowerOff tests are COMMENTED OUT");
             System.out.println("  Uncomment in code if you want to test these functions");
             System.out.println("  WARNING: PowerOff and Restart will turn off/restart the device!");
-            
+
             // UNCOMMENT BELOW TO TEST (BE CAREFUL!)
             /*
-            try {
-                // Test sleep/resume
-                service.sleep();
-                System.out.println("✓ Device Sleep initiated");
-                Thread.sleep(3000);
-                
-                service.resume();
-                System.out.println("✓ Device Resume initiated");
-                Thread.sleep(2000);
-                
-                // DANGEROUS: Restart device
-                // service.restart();
-                // System.out.println("✓ Device Restart initiated");
-                
-                // VERY DANGEROUS: Power off device
-                // service.powerOff();
-                // System.out.println("✓ Device Power Off initiated");
-                
-            } catch (Exception e) {
-                System.out.println("✗ Device Control Error: " + e.getMessage());
-            }
-            */
+             * try {
+             * // Test sleep/resume
+             * service.sleep();
+             * System.out.println("✓ Device Sleep initiated");
+             * Thread.sleep(3000);
+             * 
+             * service.resume();
+             * System.out.println("✓ Device Resume initiated");
+             * Thread.sleep(2000);
+             * 
+             * // DANGEROUS: Restart device
+             * // service.restart();
+             * // System.out.println("✓ Device Restart initiated");
+             * 
+             * // VERY DANGEROUS: Power off device
+             * // service.powerOff();
+             * // System.out.println("✓ Device Power Off initiated");
+             * 
+             * } catch (Exception e) {
+             * System.out.println("✗ Device Control Error: " + e.getMessage());
+             * }
+             */
             System.out.println();
 
             // 11. DATA MANAGEMENT TEST (COMMENTED OUT - DESTRUCTIVE)
@@ -273,26 +274,26 @@ public class ComprehensiveDeviceTest {
             System.out.println("⚠ Clear operations are COMMENTED OUT");
             System.out.println("  Uncomment in code if you want to test these functions");
             System.out.println("  WARNING: These operations will DELETE data from the device!");
-            
+
             // UNCOMMENT BELOW TO TEST (BE VERY CAREFUL!)
             /*
-            try {
-                // Clear attendance records
-                // service.clearAttendance();
-                // System.out.println("✓ Attendance records cleared");
-                
-                // Clear admin privileges
-                // service.clearAdmin();
-                // System.out.println("✓ Admin privileges cleared");
-                
-                // Clear all users
-                // service.clearUsers();
-                // System.out.println("✓ All users cleared");
-                
-            } catch (Exception e) {
-                System.out.println("✗ Data Management Error: " + e.getMessage());
-            }
-            */
+             * try {
+             * // Clear attendance records
+             * // service.clearAttendance();
+             * // System.out.println("✓ Attendance records cleared");
+             * 
+             * // Clear admin privileges
+             * // service.clearAdmin();
+             * // System.out.println("✓ Admin privileges cleared");
+             * 
+             * // Clear all users
+             * // service.clearUsers();
+             * // System.out.println("✓ All users cleared");
+             * 
+             * } catch (Exception e) {
+             * System.out.println("✗ Data Management Error: " + e.getMessage());
+             * }
+             */
             System.out.println();
 
             // DISCONNECT
@@ -314,32 +315,32 @@ public class ComprehensiveDeviceTest {
 
     @Test
     public void testBothDevices() {
-        String[] devices = {"192.168.68.222", "192.168.68.223"};
-        
+        String[] devices = { "172.22.22.37", "172.22.22.38" };
+
         System.out.println("========================================");
         System.out.println("TESTING BOTH DEVICES");
         System.out.println("========================================\n");
-        
+
         for (String ip : devices) {
             System.out.println("\n" + "=".repeat(50));
             System.out.println("Testing Device: " + ip);
             System.out.println("=".repeat(50));
-            
+
             try (ZKTecoDeviceService service = new ZKTecoDeviceService(ip, PORT)) {
                 if (service.connect()) {
                     System.out.println("✓ Connected to " + ip);
-                    
+
                     DeviceInfo info = service.getDeviceInfo();
                     System.out.println("  Serial: " + info.getSerialNumber());
                     System.out.println("  Name: " + info.getDeviceName());
                     System.out.println("  Platform: " + info.getPlatform());
-                    
+
                     List<AttendanceRecord> records = service.getAttendance();
                     System.out.println("  Attendance Records: " + records.size());
-                    
+
                     List<UserInfo> users = service.getUsers();
                     System.out.println("  Users: " + users.size());
-                    
+
                     service.disconnect();
                     System.out.println("✓ Disconnected from " + ip);
                 } else {
@@ -349,7 +350,7 @@ public class ComprehensiveDeviceTest {
                 System.err.println("✗ Error testing " + ip + ": " + e.getMessage());
             }
         }
-        
+
         System.out.println("\n========================================");
         System.out.println("BOTH DEVICES TEST COMPLETED");
         System.out.println("========================================");
