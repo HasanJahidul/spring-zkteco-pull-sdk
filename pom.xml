@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hasanjahidul</groupId>
+    <groupId>io.github.hasanjahidul</groupId>
     <artifactId>zkteco-pull-spring-sdk</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>ZKTeco Spring SDK</name>
@@ -22,9 +22,8 @@
 
     <developers>
         <developer>
-            <name>Jahidul Hasan</name>
+            <name>Jaidul Hasan</name>
             <email>contact@hasanjahidul.com</email>
-            <url>https://hasanjahidul.com</url>
         </developer>
     </developers>
 
@@ -145,11 +144,11 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.4.0</version>
+                <version>0.7.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>
-                    <tokenAuth>true</tokenAuth>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
         </plugins>
