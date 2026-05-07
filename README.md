@@ -5,8 +5,8 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.hasanjahidul/zkteco-pull-spring-sdk.svg)](https://central.sonatype.com/artifact/com.hasanjahidul/zkteco-pull-spring-sdk)
 [![MvnRepository](https://badges.mvnrepository.com/badge/com.hasanjahidul/zkteco-pull-spring-sdk/badge.svg?label=MvnRepository)](https://mvnrepository.com/artifact/com.hasanjahidul/zkteco-pull-spring-sdk)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Downloads](https://img.shields.io/badge/downloads-1.1K%2F3mo-brightgreen.svg)](#adoption)
-[![Companies](https://img.shields.io/badge/companies-45-orange.svg)](#adoption)
+[![Downloads](https://img.shields.io/badge/downloads-2.8K%2F3mo-brightgreen.svg)](#adoption)
+[![Companies](https://img.shields.io/badge/companies-50%2B-orange.svg)](#adoption)
 
 ---
 
@@ -92,15 +92,15 @@ zkteco:
 
 ## Adoption
 
-Real-world usage (Sonatype Central stats, last 3 months):
+Real-world usage (Sonatype Publisher Insights, 3-month rolling):
 
-| Metric | Value |
-|--------|------:|
-| Total downloads | **1,100+** |
-| Unique sources | **128** |
-| Companies | **45** |
+| Metric | Current namespace<br/>`com.hasanjahidul` | Legacy / relocated<br/>`io.github.hasanjahidul` | Combined |
+|--------|---:|---:|---:|
+| Downloads | 1,100 | 1,700 | **2,800** |
+| Unique sources | 128 | 142 | ≤ 270 |
+| Companies | 45 | 53 | ≤ 98 |
 
-Adopted across 45 companies in first 3 months on Maven Central.
+> **Note:** The SDK was first published under `io.github.hasanjahidul:zkteco-spring-sdk` and later relocated to `com.hasanjahidul:zkteco-pull-spring-sdk` for canonical groupId ownership. Both Maven coordinates resolve to the same artifact lineage. Sources and company counts are not summed due to expected overlap during migration; downloads are additive.
 
 ---
 
