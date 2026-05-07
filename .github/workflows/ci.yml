@@ -27,8 +27,10 @@ jobs:
       - name: Build
         run: mvn -B -ntp compile
 
-      - name: Run tests
-        run: mvn -B -ntp test
+      - name: Run unit tests (skip device-dependent integration tests)
+        run: >
+          mvn -B -ntp test
+          -Dtest='!*DeviceTest,!*NetworkDiagnosticTest,!ManualDeviceTest,!ComprehensiveDeviceTest,!UserRetrievalTest,!DebugUserBytes,!ZKTecoDeviceServiceTest,!MultiDeviceTest,!TestStrings'
 
       - name: Verify package
         run: mvn -B -ntp -DskipTests package

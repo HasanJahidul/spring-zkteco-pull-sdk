@@ -40,7 +40,8 @@ class PacketUtilTest {
         assertEquals(4, header.length);
         assertEquals(1000, header[0]); // Command
         assertEquals(123, header[2]);  // Session ID
-        assertEquals(456, header[3]);  // Reply ID
+        // createPacket increments replyId before storing (PHP-compatible behavior).
+        assertEquals(457, header[3]);  // Reply ID (456 input + 1 increment)
     }
 
     @Test
