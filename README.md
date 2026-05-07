@@ -12,9 +12,9 @@
 
 ## Why this SDK
 
-ZKTeco devices **do not push data** — they only respond to client requests. Existing Java options either rely on the proprietary push-mode ADMS protocol or wrap C/C++ binaries. This SDK gives you a clean, pure-Java, Spring Boot-native client that **pulls** attendance logs, user data, and device state on your schedule.
+A large install base of older ZKTeco devices in production today **do not support ADMS push** — they only respond to client requests over the legacy pull protocol (TCP port 4370). Existing Java options either target newer push-only devices or wrap C/C++ binaries through JNI. This SDK gives you a clean, pure-Java, Spring Boot-native client that **pulls** attendance logs, user data, and device state on your schedule, regardless of device age or firmware.
 
-**Built for**: HRMS platforms, attendance systems, access-control integrations, ADMS replacements, multi-tenant SaaS that ingest from heterogeneous device fleets.
+**Built for**: HRMS platforms, attendance systems, access-control integrations, mixed device fleets where firmware varies across sites, and multi-tenant SaaS that need to support legacy hardware.
 
 ---
 
@@ -113,14 +113,17 @@ Adopted across 45 companies in first 3 months on Maven Central.
 
 ---
 
-## Why pull, not push?
+## Why pull?
 
-Push (ADMS) requires:
-- Public IP or VPN to each device
-- Devices initiating outbound HTTP — many corp networks block this
-- Tight coupling: server must always be up when device fires
+Pull (TCP port 4370) is the legacy protocol — universally supported across the entire ZKTeco device generation, including older firmware that **never received ADMS push capability**. Real-world fleets are mixed: a single deployment can span 5+ year old devices alongside newer models.
 
-Pull avoids all three. Server polls on its own schedule, behind any firewall, with backoff and retry under your control.
+Pull also has operational advantages over push:
+- **Server polls on its own schedule** — no dependency on device-initiated traffic
+- **Works behind any firewall** — no public IP, no VPN, no inbound rules per device
+- **Retry / backoff under server control** — predictable failure modes
+- **Stateless on the device side** — restart server without losing events
+
+This SDK lets you support legacy devices and modern ones with the same client.
 
 ---
 
