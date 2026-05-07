@@ -5,6 +5,8 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.hasanjahidul/zkteco-pull-spring-sdk.svg)](https://central.sonatype.com/artifact/com.hasanjahidul/zkteco-pull-spring-sdk)
 [![MvnRepository](https://badges.mvnrepository.com/badge/com.hasanjahidul/zkteco-pull-spring-sdk/badge.svg?label=MvnRepository)](https://mvnrepository.com/artifact/com.hasanjahidul/zkteco-pull-spring-sdk)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/HasanJahidul/zkteco-pull-spring-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/HasanJahidul/zkteco-pull-spring-sdk/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/HasanJahidul/zkteco-pull-spring-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/HasanJahidul/zkteco-pull-spring-sdk)
 [![Downloads](https://img.shields.io/badge/downloads-2.8K%2F3mo-brightgreen.svg)](#adoption)
 [![Companies](https://img.shields.io/badge/companies-50%2B-orange.svg)](#adoption)
 

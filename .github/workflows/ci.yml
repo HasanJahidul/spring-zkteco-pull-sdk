@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: mvn -B -ntp compile
 
-      - name: Run unit tests
+      - name: Run unit tests with coverage
         run: mvn -B -ntp test
         # Surefire runs *Test classes only.
         # Failsafe-style *IT classes (device-dependent) are skipped here;
@@ -35,3 +35,10 @@ jobs:
 
       - name: Verify package
         run: mvn -B -ntp -DskipTests package
+
+      - name: Upload coverage to Codecov
+        if: matrix.java-version == 17
+        uses: codecov/codecov-action@v4
+        with:
+          files: target/site/jacoco/jacoco.xml
+          fail_ci_if_error: false
