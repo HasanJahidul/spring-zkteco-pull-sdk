@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a bug in zkteco-pull-spring-sdk
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug report.
+
+  - type: input
+    id: sdk-version
+    attributes:
+      label: SDK version
+      placeholder: "e.g. 1.0.3"
+    validations:
+      required: true
+
+  - type: input
+    id: java-version
+    attributes:
+      label: Java version
+      placeholder: "e.g. 17, 21"
+    validations:
+      required: true
+
+  - type: input
+    id: spring-version
+    attributes:
+      label: Spring Boot version
+      placeholder: "e.g. 3.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: ZKTeco device model + firmware
+      placeholder: "e.g. K40, firmware 6.60"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Configure ...
+        2. Call ...
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: shell
+    validations:
+      required: false
