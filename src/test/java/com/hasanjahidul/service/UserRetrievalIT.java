@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Simple test focused on user retrieval
  */
-public class UserRetrievalTest {
+public class UserRetrievalIT {
 
     private static final String DEVICE_IP = "172.22.22.37";
 

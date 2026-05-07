@@ -3,7 +3,7 @@ package com.hasanjahidul;
 import com.hasanjahidul.protocol.ZKTecoCommand;
 import com.hasanjahidul.protocol.ZKTecoProtocol;
 
-public class NetworkDiagnosticTest {
+public class NetworkDiagnosticIT {
     public static void main(String[] args) {
         System.out.println("Starting network diagnosis sweep...");
         ZKTecoProtocol proto = new ZKTecoProtocol("172.22.22.37");

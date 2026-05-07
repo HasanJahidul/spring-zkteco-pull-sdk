@@ -10,7 +10,7 @@ import java.util.List;
  * Manual test class for testing with actual ZKTeco device
  * Run this directly to test connectivity with your device at 172.22.22.38
  */
-public class ManualDeviceTest {
+public class ManualDeviceIT {
 
     public static void main(String[] args) {
         // Create service instance with your device IP

@@ -3,7 +3,7 @@ package com.hasanjahidul;
 import com.hasanjahidul.protocol.ZKTecoCommand;
 import com.hasanjahidul.protocol.ZKTecoProtocol;
 
-public class TestStrings {
+public class DeviceStringsRunner {
     public static void main(String[] args) {
         System.out.println("Starting test strings...");
         ZKTecoProtocol proto = new ZKTecoProtocol("172.22.22.37");

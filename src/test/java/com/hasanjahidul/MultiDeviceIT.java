@@ -12,7 +12,7 @@ import java.util.List;
  * - 172.22.22.37
  * - 172.22.22.38
  */
-public class MultiDeviceTest {
+public class MultiDeviceIT {
 
     public static void main(String[] args) {
         String[] deviceIps = {"172.22.22.37", "172.22.22.38"};

@@ -27,10 +27,11 @@ jobs:
       - name: Build
         run: mvn -B -ntp compile
 
-      - name: Run unit tests (skip device-dependent integration tests)
-        run: >
-          mvn -B -ntp test
-          -Dtest='!*DeviceTest,!*NetworkDiagnosticTest,!ManualDeviceTest,!ComprehensiveDeviceTest,!UserRetrievalTest,!DebugUserBytes,!ZKTecoDeviceServiceTest,!MultiDeviceTest,!TestStrings'
+      - name: Run unit tests
+        run: mvn -B -ntp test
+        # Surefire runs *Test classes only.
+        # Failsafe-style *IT classes (device-dependent) are skipped here;
+        # they run locally via `mvn verify` when a device is reachable.
 
       - name: Verify package
         run: mvn -B -ntp -DskipTests package

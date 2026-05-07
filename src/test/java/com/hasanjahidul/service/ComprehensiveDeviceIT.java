@@ -12,7 +12,7 @@ import java.util.List;
  * Comprehensive test for all ZKTeco device functions
  * Tests all functions from the PHP SDK
  */
-public class ComprehensiveDeviceTest {
+public class ComprehensiveDeviceIT {
 
     // Configure device IP here
     private static final String DEVICE_IP = "172.22.22.37"; // Change to test different device
