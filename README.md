@@ -100,7 +100,7 @@ Real-world usage (Sonatype Central stats, last 3 months):
 | Unique sources | **128** |
 | Companies | **45** |
 
-Trend: 218 → 836 downloads month-over-month — actively growing.
+Adopted across 45 companies in first 3 months on Maven Central.
 
 ---
 
