@@ -35,7 +35,8 @@ public class ZKTecoAutoConfiguration {
 
         ZKTecoDeviceService service = new ZKTecoDeviceService(
                 properties.getIpAddress(),
-                properties.getPort()
+                properties.getPort(),
+                properties.getTimeout()
         );
 
         if (properties.isAutoConnect()) {

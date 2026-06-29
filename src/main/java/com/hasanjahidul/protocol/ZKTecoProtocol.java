@@ -18,11 +18,14 @@ public class ZKTecoProtocol implements AutoCloseable {
 
     private static final int DEFAULT_PORT = 4370;
     private static final int SOCKET_TIMEOUT = 60000; // 60 seconds
+    private static final long MAX_RECEIVE_MILLIS = 120_000; // overall wall-clock bound on chunked receive
+    private static final int MAX_NO_PROGRESS = 20; // consecutive zero-progress receives before abort
     private static final int BUFFER_SIZE = 4096;
     private static final int USHRT_MAX = 65535;
 
     private final String ipAddress;
     private final int port;
+    private final int socketTimeoutMillis;
     private DatagramSocket socket;
     private InetAddress deviceAddress;
     private int sessionId = 0;
@@ -53,8 +56,20 @@ public class ZKTecoProtocol implements AutoCloseable {
      * @param port      Port number (default is 4370)
      */
     public ZKTecoProtocol(String ipAddress, int port) {
+        this(ipAddress, port, SOCKET_TIMEOUT);
+    }
+
+    /**
+     * Create ZKTeco protocol handler with custom port and socket timeout.
+     *
+     * @param ipAddress           IP address of the device
+     * @param port                Port number (default is 4370)
+     * @param socketTimeoutMillis Per-packet socket read timeout in milliseconds
+     */
+    public ZKTecoProtocol(String ipAddress, int port, int socketTimeoutMillis) {
         this.ipAddress = ipAddress;
         this.port = port;
+        this.socketTimeoutMillis = socketTimeoutMillis;
     }
 
     /**
@@ -66,7 +81,7 @@ public class ZKTecoProtocol implements AutoCloseable {
         try {
             deviceAddress = InetAddress.getByName(ipAddress);
             socket = new DatagramSocket();
-            socket.setSoTimeout(SOCKET_TIMEOUT);
+            socket.setSoTimeout(socketTimeoutMillis);
 
             // Initial connection: session=0, reply_id=65534 (USHRT_MAX-1)
             sessionId = 0;
@@ -353,29 +368,42 @@ public class ZKTecoProtocol implements AutoCloseable {
             int received = 0;
             int errors = 0;
             int maxErrors = 10;
+            int noProgress = 0;
             boolean first = true;
-            
+            long deadline = System.currentTimeMillis() + MAX_RECEIVE_MILLIS;
+
             while (received < totalSize && errors < maxErrors) {
+                if (System.currentTimeMillis() > deadline) {
+                    log.error("Receive deadline exceeded after {} ms. Received {}/{} bytes",
+                            MAX_RECEIVE_MILLIS, received, totalSize);
+                    break;
+                }
                 try {
                     byte[] buffer = new byte[1032]; // PHP uses 1032 byte buffer
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                     socket.receive(packet);
-                    
+
                     byte[] packetData = new byte[packet.getLength()];
                     System.arraycopy(buffer, 0, packetData, 0, packet.getLength());
-                    
+
                     // Skip first 8 bytes (header) except for first packet
                     int offset = first ? 0 : 8;
                     int dataLength = packet.getLength() - offset;
-                    
+
                     if (dataLength > 0) {
                         dataStream.write(packetData, offset, dataLength);
                         received += dataLength;
+                        noProgress = 0;
+                        errors = 0; // reset only on real progress
+                    } else {
+                        if (++noProgress >= MAX_NO_PROGRESS) {
+                            log.error("Aborting: {} consecutive zero-length packets. Received {}/{} bytes",
+                                    noProgress, received, totalSize);
+                            break;
+                        }
                     }
-                    
                     first = false;
-                    errors = 0; // Reset error count on successful receive
-                    
+
                 } catch (SocketTimeoutException e) {
                     errors++;
                     log.warn("Timeout receiving data packet (attempt {}/{})", errors, maxErrors);
@@ -394,10 +422,10 @@ public class ZKTecoProtocol implements AutoCloseable {
                 byte[] flushBuffer = new byte[1024];
                 DatagramPacket flushPacket = new DatagramPacket(flushBuffer, flushBuffer.length);
                 socket.receive(flushPacket);
-                socket.setSoTimeout(SOCKET_TIMEOUT); // Restore original timeout
+                socket.setSoTimeout(socketTimeoutMillis); // Restore configured timeout
             } catch (SocketTimeoutException e) {
                 // Expected - no more data
-                socket.setSoTimeout(SOCKET_TIMEOUT);
+                socket.setSoTimeout(socketTimeoutMillis);
             }
             
             byte[] result = dataStream.toByteArray();

@@ -53,6 +53,17 @@ public class ZKTecoDeviceService implements AutoCloseable {
     }
 
     /**
+     * Create ZKTeco device service with custom port and socket timeout.
+     *
+     * @param ipAddress           IP address of the device
+     * @param port                Port number (default is 4370)
+     * @param socketTimeoutMillis Per-packet socket read timeout in milliseconds
+     */
+    public ZKTecoDeviceService(String ipAddress, int port, int socketTimeoutMillis) {
+        this.protocol = new ZKTecoProtocol(ipAddress, port, socketTimeoutMillis);
+    }
+
+    /**
      * Connect to device
      *
      * @return true if connection successful
